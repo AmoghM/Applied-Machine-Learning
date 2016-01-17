@@ -3,33 +3,39 @@ class LogicalAndPerceptron
 {
 	public static void main(String args[])
 	{
-		int train_data[][]={{0,0,0},{0,1,0},{1,1,1},{1,0,0}};
+		int train_data[][]={{1,0,0,0},{1,0,1,0},{1,1,1,1},{1,1,0,0}};
 		double learning_rate=0.1;
-		int n=100; //number of iterations
+		int n=50000; //number of iterations
 		int i=1,j; 
-		double w[]=new double[2];
-		w[0]=Math.random(); //random weight 1
-		w[1]=Math.random(); // random weight 2
+		double w[]=new double[3];
+		w[0]=Math.random();
+		w[1]=Math.random(); //random weight 1
+		w[2]=Math.random(); // random weight 2
+		
 		while(i<=n)
 		{
 			j=0+(int)(Math.random()*3);
-			double dot_product=w[0]*train_data[j][0]+w[1]*train_data[j][1]; //dot product sigma(w(i),x(i)) for i=1,2
+			double dot_product=w[0]*train_data[j][0]+w[1]*train_data[j][1]+w[2]*train_data[j][2]; //dot product sigma(w(i),x(i)) for i=1,2
 			int observed_value=result(dot_product);
-			int expected_value=train_data[j][2];
-			w[0]=w[0]+learning_rate*(expected_value-observed_value)*train_data[j][0];
-			w[1]=w[1]+learning_rate*(expected_value-observed_value)*train_data[j][1];	
+			int expected_value=train_data[j][3];
+			int error=expected_value-observed_value;
+			w[0]=w[0]+learning_rate*error*train_data[j][0];
+			w[1]=w[1]+learning_rate*error*train_data[j][1];
+			w[2]=w[2]+learning_rate*error*train_data[j][2];	
 		i++;
 		}
 		
 		for(i=0;i<4;i++)
 		{
-			double dot_product=w[0]*train_data[i][0]+w[1]*train_data[i][1];
+			double dot_product=w[0]*train_data[i][0]+w[1]*train_data[i][1]+w[2]*train_data[i][2];
 			int observed_value=result(dot_product);
-			int expected_value=train_data[i][2];
-			System.out.println("  expected  observed");
+			int expected_value=train_data[i][3];
+			System.out.println("  observed  expected");
 			System.out.println("\t"+observed_value+"\t"+expected_value);
 			
+			
 		}
+		System.out.println(w[0]+" "+w[1]+" "+" " +w[2]);
 	}
 	
 	public static int result(double prod)
