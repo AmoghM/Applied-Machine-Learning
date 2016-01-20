@@ -5,7 +5,7 @@ class LogicalAndPerceptron
 	{
 		int train_data[][]={{1,0,0,0},{1,0,1,0},{1,1,1,1},{1,1,0,0}};
 		double learning_rate=0.1;
-		int n=50000; //number of iterations
+		int n=500; //number of iterations
 		int i=1,j; 
 		double w[]=new double[3];
 		w[0]=Math.random();
